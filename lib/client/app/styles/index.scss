@@ -1,0 +1,30 @@
+* {
+	border: 1px dashed;
+}
+
+body {
+	margin: 0;
+}
+
+form.post-thread {
+	display: flex;
+	flex-direction: column;
+}
+
+.thread {
+	display: flex;
+
+	.thread-image {
+		img {
+			width: 320px;
+		}
+	}
+
+	.thread-content {
+		flex-basis: 100%;
+	}
+
+	.thread-content-author {
+		color: #00bfa5
+	}
+}
