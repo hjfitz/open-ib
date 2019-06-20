@@ -1,21 +1,8 @@
 import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
-import format from 'date-fns/format'
 
-import {api} from './shared'
+import {api, formatDate, imageToB64} from './shared'
 
-function imageToB64(file) {
-	return new Promise((res, rej) => {
-		try {
-			const reader = new FileReader()
-			reader.addEventListener('load', () => res(reader.result), false)
-			reader.addEventListener('error', rej)
-			reader.readAsDataURL(file)
-		} catch (err) {
-			rej(err)
-		}
-	})
-}
 
 class Main extends Component {
 	state = {
@@ -33,7 +20,7 @@ class Main extends Component {
 
 	renderThreads() {
 		return this.state.threads.map((thread) => {
-			const cleanDate = format(thread.posted, '(dd) DD/MM/YY @ HH.mm.ss')
+			const cleanDate = formatDate(thread.posted)
 			return (
 				<section className="thread" key={thread._id}>
 					<figure className="thread-image">
@@ -41,7 +28,12 @@ class Main extends Component {
 					</figure>
 					<aside className="thread-content">
 						<header>
-							<h3><span className="thread-content-author">{thread.author}</span>{cleanDate} ID.<Link to={`/thread/${thread._id}`}>{thread._id}</Link></h3>
+							<h3>
+								<span className="thread-content-author">{thread.author}</span>
+								<span className="thread-content-title">{thread.title}</span>
+								{cleanDate} 
+								ID.<Link to={`/thread/${thread._id}`}>{thread._id}</Link>
+							</h3>
 						</header>
 						{thread.body}
 					</aside>
@@ -51,10 +43,7 @@ class Main extends Component {
 	}
 
 	postThread = async (ev) => {
-		console.log('[postThread] invoked')
 		ev.preventDefault()
-		console.log(await imageToB64(this.postImg.files[0]))
-
 		try {
 			await api.post('/thread', {
 				title: this.postTitle.value,

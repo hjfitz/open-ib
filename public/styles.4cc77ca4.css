@@ -1,3 +1,10 @@
+.comments-comment {
+  display: flex;
+}
+.comments-comment .comment-image img {
+  width: 240px;
+}
+
 * {
   border: 1px dashed;
 }
