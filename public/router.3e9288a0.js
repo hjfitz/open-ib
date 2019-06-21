@@ -29621,7 +29621,27 @@ if ("development" !== "production") {
     style: _propTypes.default.object
   });
 }
-},{"@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../../node_modules/react/index.js","react-router":"../../node_modules/react-router/esm/react-router.js","history":"../../node_modules/history/esm/history.js","prop-types":"../../node_modules/prop-types/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"../../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"../../node_modules/regenerator-runtime/runtime.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/esm/inheritsLoose":"../../node_modules/@babel/runtime/helpers/esm/inheritsLoose.js","react":"../../node_modules/react/index.js","react-router":"../../node_modules/react-router/esm/react-router.js","history":"../../node_modules/history/esm/history.js","prop-types":"../../node_modules/prop-types/index.js","tiny-warning":"../../node_modules/tiny-warning/dist/tiny-warning.esm.js","@babel/runtime/helpers/esm/extends":"../../node_modules/@babel/runtime/helpers/esm/extends.js","@babel/runtime/helpers/esm/objectWithoutPropertiesLoose":"../../node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js","tiny-invariant":"../../node_modules/tiny-invariant/dist/tiny-invariant.esm.js"}],"../../node_modules/@babel/runtime/helpers/extends.js":[function(require,module,exports) {
+function _extends() {
+  module.exports = _extends = Object.assign || function (target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i];
+
+      for (var key in source) {
+        if (Object.prototype.hasOwnProperty.call(source, key)) {
+          target[key] = source[key];
+        }
+      }
+    }
+
+    return target;
+  };
+
+  return _extends.apply(this, arguments);
+}
+
+module.exports = _extends;
+},{}],"../../node_modules/regenerator-runtime/runtime.js":[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
  *
@@ -33617,13 +33637,47 @@ function imageToB64(file) {
 }
 
 function noop() {}
-},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","axios":"../../node_modules/axios/index.js","date-fns/format":"../../node_modules/date-fns/format/index.js"}],"app/pages/Main.jsx":[function(require,module,exports) {
+},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","axios":"../../node_modules/axios/index.js","date-fns/format":"../../node_modules/date-fns/format/index.js"}],"app/pages/partials/post-header.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PostHeader = function PostHeader(props) {
+  return _react.default.createElement(_react.default.Fragment, null, _react.default.createElement("figure", {
+    className: "".concat(props.type, "-image")
+  }, _react.default.createElement("img", {
+    src: props.photo
+  })), _react.default.createElement("aside", {
+    className: "".concat(props.type, "-content")
+  }, _react.default.createElement("header", null, _react.default.createElement("h3", null, _react.default.createElement("span", {
+    className: "".concat(props.type, "-content-author")
+  }, props.author), _react.default.createElement("span", {
+    className: "".concat(props.type, "-content-title")
+  }, props.title), props.posted, _react.default.createElement(_reactRouterDom.Link, {
+    to: "/thread/".concat(props._id)
+  }, "ID. ".concat(props._id)))), props.body));
+};
+
+var _default = PostHeader;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"app/pages/Main.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -33648,6 +33702,8 @@ var _react = _interopRequireWildcard(require("react"));
 var _reactRouterDom = require("react-router-dom");
 
 var _shared = require("./shared");
+
+var _postHeader = _interopRequireDefault(require("./partials/post-header"));
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -33792,23 +33848,12 @@ function (_Component) {
     key: "renderThreads",
     value: function renderThreads() {
       return this.state.threads.map(function (thread) {
-        var cleanDate = (0, _shared.formatDate)(thread.posted);
         return _react.default.createElement("section", {
           className: "thread",
           key: thread._id
-        }, _react.default.createElement("figure", {
-          className: "thread-image"
-        }, _react.default.createElement("img", {
-          src: thread.photo
-        })), _react.default.createElement("aside", {
-          className: "thread-content"
-        }, _react.default.createElement("header", null, _react.default.createElement("h3", null, _react.default.createElement("span", {
-          className: "thread-content-author"
-        }, thread.author), _react.default.createElement("span", {
-          className: "thread-content-title"
-        }, thread.title), cleanDate, "ID.", _react.default.createElement(_reactRouterDom.Link, {
-          to: "/thread/".concat(thread._id)
-        }, thread._id))), thread.body));
+        }, _react.default.createElement(_postHeader.default, (0, _extends2.default)({}, thread, {
+          type: "thread"
+        })));
       });
     }
   }, {
@@ -33861,13 +33906,61 @@ function (_Component) {
 
 var _default = Main;
 exports.default = _default;
-},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/assertThisInitialized":"../../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/inherits":"../../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./shared":"app/pages/shared.js"}],"app/pages/Thread.jsx":[function(require,module,exports) {
+},{"@babel/runtime/helpers/extends":"../../node_modules/@babel/runtime/helpers/extends.js","@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/assertThisInitialized":"../../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/inherits":"../../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./shared":"app/pages/shared.js","./partials/post-header":"app/pages/partials/post-header.jsx"}],"app/pages/partials/comment.jsx":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CommentImg = function CommentImg(_ref) {
+  var src = _ref.src;
+  return _react.default.createElement("aside", null, _react.default.createElement("figure", {
+    className: "comment-image"
+  }, _react.default.createElement("img", {
+    src: src,
+    alt: ""
+  })));
+};
+
+var CommentHeader = function CommentHeader(props) {
+  return _react.default.createElement("header", null, _react.default.createElement("h3", null, _react.default.createElement("span", {
+    className: "thread-content-author"
+  }, props.author), _react.default.createElement(_reactRouterDom.Link, {
+    to: "/thread/".concat(props.threadID, "#").concat(props._id)
+  }, "ID. ".concat(props._id))));
+};
+
+var Comment = function Comment(props) {
+  var img = props.photo ? _react.default.createElement(CommentImg, {
+    src: props.photo
+  }) : '';
+  return _react.default.createElement("div", {
+    className: "comments-comment",
+    id: props._id
+  }, img, _react.default.createElement("div", {
+    className: "comment-body"
+  }, _react.default.createElement(CommentHeader, props), _react.default.createElement("pre", null, props.body)));
+};
+
+var _default = Comment;
+exports.default = _default;
+},{"react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js"}],"app/pages/Thread.jsx":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 
@@ -33893,16 +33986,14 @@ var _reactRouterDom = require("react-router-dom");
 
 var _shared = require("./shared");
 
+var _comment = _interopRequireDefault(require("./partials/comment"));
+
+var _postHeader = _interopRequireDefault(require("./partials/post-header"));
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// todo:
-//// - display thread information
-// - show comment box
-// - upload comments
-// - fetch all comments
-// - ensure on homepage all comments aren't retrieved
 var Thread =
 /*#__PURE__*/
 function (_Component) {
@@ -33965,16 +34056,15 @@ function (_Component) {
                 body: _context.t1,
                 photo: _context.t3
               };
-              console.log(payload);
-              _context.next = 14;
+              _context.next = 13;
               return _shared.api.post("/thread/".concat(_this.state._id), payload);
 
-            case 14:
+            case 13:
               resp = _context.sent;
-              _context.next = 17;
+              _context.next = 16;
               return _this.fetchThread();
 
-            case 17:
+            case 16:
             case "end":
               return _context.stop();
           }
@@ -33999,7 +34089,6 @@ function (_Component) {
             case 3:
               _ref3 = _context2.sent;
               data = _ref3.data;
-              console.log('[thread data]:', data);
 
               _this.setState({
                 author: data.author,
@@ -34010,7 +34099,7 @@ function (_Component) {
                 posted: (0, _shared.formatDate)(data.posted)
               });
 
-            case 7:
+            case 6:
             case "end":
               return _context2.stop();
           }
@@ -34062,36 +34151,15 @@ function (_Component) {
         onClick: this.commentThread
       }, "Comment"))), _react.default.createElement("section", {
         className: "thread"
-      }, _react.default.createElement("figure", {
-        className: "thread-image"
-      }, _react.default.createElement("img", {
-        src: this.state.photo
-      })), _react.default.createElement("aside", {
-        className: "thread-content"
-      }, _react.default.createElement("header", null, _react.default.createElement("h3", null, _react.default.createElement("span", {
-        className: "thread-content-author"
-      }, this.state.author), _react.default.createElement("span", {
-        className: "thread-content-title"
-      }, this.state.title), this.state.posted, "ID.", _react.default.createElement(_reactRouterDom.Link, {
-        to: "/thread/".concat(this.state._id)
-      }, this.state._id))), this.state.body)), _react.default.createElement("section", {
+      }, _react.default.createElement(_postHeader.default, (0, _extends2.default)({}, this.state, {
+        type: "thread"
+      }))), _react.default.createElement("section", {
         className: "comments"
       }, this.state.comments.map(function (comment) {
-        // author, body, photo
-        var img = comment.photo ? _react.default.createElement("aside", null, _react.default.createElement("figure", {
-          className: "comment-image"
-        }, _react.default.createElement("img", {
-          src: comment.photo
-        }))) : '';
-        return _react.default.createElement("div", {
-          className: "comments-comment",
-          key: comment._id,
-          id: comment._id
-        }, img, _react.default.createElement("header", null, _react.default.createElement("h3", null, _react.default.createElement("span", {
-          className: "thread-content-author"
-        }, comment.author), _this2.state.posted, "ID.", _react.default.createElement(_reactRouterDom.Link, {
-          to: "/thread/".concat(_this2.state._id, "#").concat(comment._id)
-        }, _this2.state._id))), _react.default.createElement("pre", null, comment.body));
+        return _react.default.createElement(_comment.default, (0, _extends2.default)({}, comment, {
+          threadID: _this2.state._id,
+          key: comment._id
+        }));
       })));
     }
   }]);
@@ -34100,7 +34168,7 @@ function (_Component) {
 
 var _default = Thread;
 exports.default = _default;
-},{"@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/assertThisInitialized":"../../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/inherits":"../../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./shared":"app/pages/shared.js"}],"app/pages/index.js":[function(require,module,exports) {
+},{"@babel/runtime/helpers/extends":"../../node_modules/@babel/runtime/helpers/extends.js","@babel/runtime/regenerator":"../../node_modules/@babel/runtime/regenerator/index.js","@babel/runtime/helpers/asyncToGenerator":"../../node_modules/@babel/runtime/helpers/asyncToGenerator.js","@babel/runtime/helpers/classCallCheck":"../../node_modules/@babel/runtime/helpers/classCallCheck.js","@babel/runtime/helpers/createClass":"../../node_modules/@babel/runtime/helpers/createClass.js","@babel/runtime/helpers/possibleConstructorReturn":"../../node_modules/@babel/runtime/helpers/possibleConstructorReturn.js","@babel/runtime/helpers/getPrototypeOf":"../../node_modules/@babel/runtime/helpers/getPrototypeOf.js","@babel/runtime/helpers/assertThisInitialized":"../../node_modules/@babel/runtime/helpers/assertThisInitialized.js","@babel/runtime/helpers/inherits":"../../node_modules/@babel/runtime/helpers/inherits.js","@babel/runtime/helpers/defineProperty":"../../node_modules/@babel/runtime/helpers/defineProperty.js","react":"../../node_modules/react/index.js","react-router-dom":"../../node_modules/react-router-dom/esm/react-router-dom.js","./shared":"app/pages/shared.js","./partials/comment":"app/pages/partials/comment.jsx","./partials/post-header":"app/pages/partials/post-header.jsx"}],"app/pages/index.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {

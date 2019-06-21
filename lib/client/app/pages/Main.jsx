@@ -2,12 +2,11 @@ import React, {Component} from 'react'
 import {Link} from 'react-router-dom'
 
 import {api, formatDate, imageToB64} from './shared'
+import PostHeader from './partials/post-header';
 
 
 class Main extends Component {
-	state = {
-		threads: []
-	}
+	state = {threads: []}
 
 	populate = async () => {
 		const {data: threads} = await api.get('/threads')
@@ -19,27 +18,11 @@ class Main extends Component {
 	}
 
 	renderThreads() {
-		return this.state.threads.map((thread) => {
-			const cleanDate = formatDate(thread.posted)
-			return (
-				<section className="thread" key={thread._id}>
-					<figure className="thread-image">
-						<img src={thread.photo}/>
-					</figure>
-					<aside className="thread-content">
-						<header>
-							<h3>
-								<span className="thread-content-author">{thread.author}</span>
-								<span className="thread-content-title">{thread.title}</span>
-								{cleanDate} 
-								ID.<Link to={`/thread/${thread._id}`}>{thread._id}</Link>
-							</h3>
-						</header>
-						{thread.body}
-					</aside>
-				</section>
-			)
-		})
+		return this.state.threads.map((thread) => (
+			<section className="thread" key={thread._id}>
+				<PostHeader {...thread} type="thread" />
+			</section>
+		))
 	}
 
 	postThread = async (ev) => {
